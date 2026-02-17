@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Build your own Shell challenge, from CodeCrafters",
   "main": "main.js",
+  "type": "module",
   "scripts": {
+    "start": "electron ./app/electron.js --no-sandbox",
     "dev": "node app/main.js"
   },
   "keywords": [
@@ -11,5 +13,9 @@
   ],
   "author": "",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3",
+    "xterm": "^5.3.0"
+  }
 }

@@ -1,22 +1,50 @@
-const { exit } = require("process");
-const readline = require("readline");
+import { exit } from "process";
+import readline from "readline";
+import fs from "fs";
+import path from "path";
 
 // Builtin commands
 const builtins = {
   exit: () => {
-    process.exit(0);
+    exit();
   },
   echo: (args) => {
     console.log(args.join(" "));
   },
   type: (args) => {
-    if (args.lenght === 0) {
+    if (args.length === 0) {
       console.log("type: missing argument");
+      return;
     }
 
     const command = args[0];
-    command in builtins ? console.log(`${command} is a shell builtin`) : console.log(`${command}: not found`); 
-  }
+
+    // check if its a builtin
+    if (command in builtins) {
+      console.log(`${command} is a shell builtin`);
+      return;
+    }
+
+    // get path dir
+    const PATH = process.env.PATH || "";
+    const dirs = PATH.split(":");
+
+    // search in each PATH dir
+    for (const dir of dirs) {
+      const fullPath = path.join(dir, command);
+
+      if (fs.existsSync(fullPath)) {
+        try {
+          fs.accessSync(fullPath, fs.constants.X_OK); // check if it has executable permission
+          console.log(`${command} is ${fullPath}`);
+          return;
+        } catch {}
+      }
+    }
+
+    // not found
+    console.log(`${command}: not found`);
+  },
 };
 
 const rl = readline.createInterface({
@@ -51,5 +79,5 @@ rl.on("line", (input) => {
 
 rl.on("SIGINT", () => {
   rl.close();
-  process.exit(0);
+  exit();
 });
