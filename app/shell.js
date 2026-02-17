@@ -3,6 +3,43 @@ import { spawn } from "child_process";
 import { builtins } from "./builtins.js";
 import { findExecutable } from "./utils/findExecutable.js";
 
+function parseInput(input) {
+  const args = []; // will be final array of parsed args
+  let current = ""; // building current word
+  let inSingleQuote = false; // track if we are inside a single quote '...' block or not
+
+  for (let i = 0; i < input.length; i++) {
+    const char = input[i];
+
+    if (char === "'") {
+      inSingleQuote = !inSingleQuote; // Every time we hit a single quote ', we flip the inSingleQuote boolean
+      continue; // not including the single quote itself
+    }
+
+    // Example : 'hello'
+    /* First ' → inSingleQuote = true, skip '
+
+    Add h, e, l, l, o → current = "hello"
+
+    Last ' → inSingleQuote = false, skip ' */
+
+    if (char === " " && !inSingleQuote) {
+      if (current.length > 0) {
+        args.push(current);
+        current = "";
+      }
+    } else {
+      current += char;
+    }
+  }
+
+  if (current.length > 0) {
+    args.push(current);
+  }
+
+  return args;
+}
+
 export function startShell() {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -20,7 +57,9 @@ export function startShell() {
       return;
     }
 
-    const [cmd, ...args] = trimmed.split(/\s+/);
+    const tokens = parseInput(trimmed);
+    const cmd = tokens[0];
+    const args = tokens.slice(1);
 
     if (builtins[cmd]) {
       builtins[cmd](args);
