@@ -1,5 +1,6 @@
 import { exit } from "process";
 import { findExecutable } from "./utils/findExecutable.js";
+import fs from "fs";
 
 export const builtins = {
   exit: () => {
@@ -10,6 +11,27 @@ export const builtins = {
   },
   pwd: () => {
     console.log(process.cwd());
+  },
+  cd: (args) => {
+      if (!args || args.length === 0) {
+          return;
+      }
+
+        const target = args[0];
+        
+        // only handle absolute path for now
+      if (target.startsWith("/")) {
+          try {
+              if (fs.existsSync(target) && fs.statSync(target).isDirectory) {
+                  process.chdir(target);
+              } else {
+                  console.log(`cd: ${target}: No such file or directory`);
+              }
+          } catch {
+              console.log(`cd: ${target}: No such file or directory`);
+            }
+        }
+    
   },
   type: (args) => {
     if (!args || args.length === 0) {
