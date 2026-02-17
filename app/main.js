@@ -43,7 +43,6 @@ rl.on("line", (input) => {
 });
 
 rl.on("SIGINT", () => {
-  console.log("\nExiting Shell...");
   rl.close();
   process.exit(0);
 });
