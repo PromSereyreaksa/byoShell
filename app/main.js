@@ -9,6 +9,14 @@ const builtins = {
   echo: (args) => {
     console.log(args.join(" "));
   },
+  type: (args) => {
+    if (args.lenght === 0) {
+      console.log("type: missing argument");
+    }
+
+    const command = args[0];
+    command in builtins ? console.log(`${command} is a shell builtin`) : console.log(`${command}: not found`); 
+  }
 };
 
 const rl = readline.createInterface({
