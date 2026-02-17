@@ -1,34 +1,54 @@
-[![progress-banner](https://backend.codecrafters.io/progress/shell/8efd72c1-dfc9-47f1-9af4-bf2d6e5eef04)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
+# byoShell
 
-This is a starting point for JavaScript solutions to the
-["Build Your Own Shell" Challenge](https://app.codecrafters.io/courses/shell/overview).
+A minimal POSIX‑compliant shell built from scratch in JavaScript — a playground for shell internals, command parsing, and process management, whilst following Codecrafters' "Build Your Own Shell" Challenge.
 
-In this challenge, you'll build your own POSIX compliant shell that's capable of
-interpreting shell commands, running external programs and builtin commands like
-cd, pwd, echo and more. Along the way, you'll learn about shell command parsing,
-REPLs, builtin commands, and more.
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)  
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)  
+[![Shell](https://img.shields.io/badge/Shell-BF3030?style=for-the-badge&logo=gnubash&logoColor=white)](https://en.wikipedia.org/wiki/Unix_shell)  
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+---
 
-# Passing the first stage
+### **Learning Resources**
 
-The entry point for your `shell` implementation is in `app/main.js`. Study and
-uncomment the relevant code, and push your changes to pass the first stage:
+I’m learning shell internals, process management, and command parsing while building this project. Key resources I’m following include:  
 
-```sh
-git commit -am "pass 1st stage" # any msg
-git push origin master
-```
+- [Codecrafters – Build Your Own Shell](https://app.codecrafters.io/courses/shell/overview) – hands-on challenge teaching **command parsing, REPLs, builtin commands, and process execution**.  
+- [POSIX Shell Specification](https://pubs.opengroup.org/onlinepubs/9699919799/) – for understanding **shell syntax and behavior**.  
+- [Node.js Child Processes](https://nodejs.org/api/child_process.html) – to learn **spawning and managing external commands** in JavaScript.  
 
-Time to move on to the next stage!
+---
 
-# Stage 2 & beyond
+## **About**
 
-Note: This section is for stages 2 and beyond.
+byoShell is my personal project to **build a lightweight shell from scratch** and understand how **command-line interpreters** work under the hood.  
 
-1. Ensure you have `node (21)` installed locally
-1. Run `./your_program.sh` to run your program, which is implemented in
-   `app/main.js`.
-1. Commit your changes and run `git push origin master` to submit your solution
-   to CodeCrafters. Test output will be streamed to your terminal.
+Instead of relying on existing shells like Bash or Zsh, this project implements:
+
+- Parsing user input into commands and arguments  
+- Running **builtin commands** (`cd`, `pwd`, `echo`, etc.)  
+- Executing **external programs** using Node.js  
+- A **REPL loop** that continuously reads, evaluates, and executes commands  
+
+This provides a foundation for experimenting with shell behavior, process management, and command-line tools.
+
+---
+
+## **Core Concepts**
+
+- REPL (Read-Eval-Print Loop) design  
+- Command parsing and tokenization  
+- Builtin command implementation  
+- Spawning and managing child processes in Node.js  
+- Event-driven JavaScript with asynchronous process handling  
+
+---
+
+## **Tech Stack**
+
+- **Node.js**  
+- **JavaScript (CommonJS modules as used by CodeCrafters)**  
+- **POSIX Shell concepts**  
+
+---
+
+© 2026 Prom Sereyreaksa
