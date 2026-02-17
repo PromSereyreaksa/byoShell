@@ -4,7 +4,6 @@ const readline = require("readline");
 // Builtin commands
 const builtins = {
   exit: () => {
-    console.log("Exiting byoShell...");
     process.exit(0);
   },
   echo: (args) => {
