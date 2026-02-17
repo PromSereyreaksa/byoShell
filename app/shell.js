@@ -10,13 +10,11 @@ export function startShell() {
     prompt: "$ ",
   });
 
-  // show $ initial prompt
   rl.prompt();
 
   rl.on("line", (input) => {
     const trimmed = input.trim();
 
-    // if user enter just go back to $ prompt
     if (!trimmed) {
       rl.prompt();
       return;
@@ -28,14 +26,22 @@ export function startShell() {
       builtins[cmd](args);
       rl.prompt();
     } else {
-      const executable = findExecutable(cmd);
-      if (!executable) {
-        console.log(`${cmd}: command not found`);
-        rl.prompt();
-      } else {
-        const child = spawn(executable, args, { stdio: "inherit" });
-        child.on("exit", () => rl.prompt());
-      }
+      // try direct execution first
+      const child = spawn(cmd, args, { stdio: "inherit" });
+
+      child.on("error", () => {
+        // fallback to PATH search
+        const executable = findExecutable(cmd);
+        if (executable) {
+          const child2 = spawn(executable, args, { stdio: "inherit" });
+          child2.on("exit", () => rl.prompt());
+        } else {
+          console.log(`${cmd}: command not found`);
+          rl.prompt();
+        }
+      });
+
+      child.on("exit", () => rl.prompt());
     }
   });
 
