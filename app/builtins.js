@@ -8,6 +8,9 @@ export const builtins = {
   echo: (args) => {
     console.log(args.join(" "));
   },
+  pwd: () => {
+    console.log(process.cwd());
+  },
   type: (args) => {
     if (!args || args.length === 0) {
       console.log("type: missing argument");
